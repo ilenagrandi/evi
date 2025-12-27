@@ -1,0 +1,101 @@
+Rule Type: Always
+Scope: .
+
+You are working on the Flutter mobile app "EVI".
+
+EVI is a delicate, feminine and empathetic app that helps users:
+- track their menstrual cycle,
+- understand which phase they are in,
+- receive recommendations for intermittent fasting adapted to each phase,
+- and progressively include notifications, payments/subscriptions and gamification (streaks, badges, gentle encouragement).
+
+🎨 Design & UX principles:
+
+- Visual style:
+  - Soft, feminine, calming colors (pinks, nudes, soft lilacs, very soft greens).
+  - Generous white space and breathing room.
+  - Rounded corners and very soft shadows.
+  - No aggressive colors or overly saturated visuals.
+
+- Typography:
+  - Use a clean, modern, soft sans-serif (e.g., Inter, Nunito, or a similar font that works well in Flutter).
+  - Define a consistent text theme with:
+    - title styles,
+    - subtitle styles,
+    - body text and captions.
+
+- Components:
+  - Buttons with rounded corners, clear primary CTA per screen.
+  - Cards to summarize:
+    - current cycle phase,
+    - fasting recommendation for today,
+    - upcoming events (PMS, menstruation start).
+  - Gentle iconography, minimalistic and consistent.
+
+🧱 Architecture:
+
+Use a feature-first + layered structure:
+
+- `lib/app/`
+  - App entry point, MaterialApp/CupertinoApp.
+  - Routing (go_router or Navigator 2.0).
+  - Global theme configuration.
+  - Dependency injection setup if needed.
+
+- `lib/core/`
+  - `theme/` → colors, text styles, spacing system, common themes.
+  - `widgets/` → shared, reusable UI components.
+  - `services/` → generic services (e.g., local storage, http client wrapper, notifications abstraction).
+  - `utils/` → helpers (formatting dates, cycle labels, etc.).
+
+- `lib/features/<feature_name>/`
+  - `data/`:
+    - data sources (remote/local),
+    - repositories implementations,
+    - DTOs/models for API communication.
+  - `domain/`:
+    - entities (e.g., `Cycle`, `Phase`, `FastingPlan`, `SymptomLog`),
+    - value objects,
+    - use cases (e.g. `GetCurrentPhase`, `GetFastingRecommendationForToday`).
+  - `presentation/`:
+    - screens, widgets specific to the feature,
+    - state providers/controllers (e.g. using Riverpod).
+
+Examples of features:
+- `features/onboarding/`
+- `features/auth/`
+- `features/cycle_tracking/`
+- `features/fasting/`
+- `features/notifications/`
+- `features/gamification/`
+- `features/profile/`
+
+📌 Rules:
+
+- Do NOT put business logic inside Widgets.
+  - Widgets react to state and call actions exposed by controllers/use cases.
+- Use a single, consistent state management solution (prefer `Riverpod` if not defined otherwise).
+- Keep each screen focused:
+  - one primary CTA,
+  - minimal cognitive load.
+
+- Shared UI patterns:
+  - Extract repeatable patterns to `core/widgets` (e.g., primary button, card layout, section headers).
+  - Avoid copy-pasting UI; use small composable widgets.
+
+🔔 Notifications & backend integration:
+
+- Treat network and backend as abstractions:
+  - define service interfaces that the presentation layer can depend on.
+  - actual HTTP logic should live in `data` or `core/services`.
+
+- Push notifications and local notifications:
+  - Encapsulate all logic in a dedicated service in `core/services` or a `notifications` feature.
+  - UI should only subscribe to high-level events (e.g. "new reminder", "new fasting recommendation").
+
+General principle:
+- Favor clarity, empathy and simplicity.
+- Code should be modular, easy to reason about, and ready to connect cleanly with the NestJS backend.
+- If introducing a new feature, always think:
+  - Which feature folder does it belong to?
+  - Which parts are domain logic vs. presentation vs. data access?
