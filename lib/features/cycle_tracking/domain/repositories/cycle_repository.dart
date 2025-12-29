@@ -9,3 +9,4 @@ abstract class CycleRepository {
   Future<void> saveLastPeriodStart(DateTime date);
 }
 
+

@@ -25,3 +25,4 @@ abstract class NotificationService {
   Future<void> scheduleFastingReminders();
 }
 
+

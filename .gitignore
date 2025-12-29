@@ -47,3 +47,19 @@ app.*.map.json
 *.g.dart
 *.freezed.dart
 
+# Environment variables
+.env
+.env.production
+.env.staging
+
+# Android signing
+android/key.properties
+*.jks
+*.keystore
+
+# iOS certificates and provisioning profiles
+ios/*.mobileprovision
+ios/*.p12
+ios/*.cer
+
+

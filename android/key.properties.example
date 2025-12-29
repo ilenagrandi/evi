@@ -1,0 +1,23 @@
+# ============================================
+# Android Keystore Configuration - EXAMPLE
+# ============================================
+# ⚠️  IMPORTANTE: Este es un archivo de ejemplo
+#     Copia este archivo a key.properties y completa con tus valores reales
+#
+# ⚠️  SEGURIDAD: Nunca subas key.properties al repositorio
+#     Este archivo contiene contraseñas sensibles
+# ============================================
+
+# Contraseña del keystore
+storePassword=your_keystore_password_here
+
+# Contraseña de la clave
+keyPassword=your_key_password_here
+
+# Alias de la clave
+keyAlias=evi
+
+# Ruta completa al archivo keystore
+# Usa una ruta absoluta o relativa desde android/
+storeFile=/path/to/your/evi-keystore.jks
+

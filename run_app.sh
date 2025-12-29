@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Script para ejecutar la app EVI
-# Este script verifica Flutter y ejecuta la app
+# Este script verifica Flutter, lee el archivo .env y ejecuta la app
 
 echo "🌸 EVI - Verificando entorno..."
 
@@ -30,6 +30,37 @@ echo ""
 # Navegar al directorio del proyecto
 cd "$(dirname "$0")"
 
+# Cargar variables de entorno desde .env
+ENV_FILE=".env"
+DART_DEFINES=""
+
+if [ -f "$ENV_FILE" ]; then
+    echo "📄 Leyendo configuración desde .env..."
+    
+    # Leer el archivo .env línea por línea
+    while IFS= read -r line || [ -n "$line" ]; do
+        # Ignorar líneas vacías y comentarios
+        if [[ -n "$line" && ! "$line" =~ ^[[:space:]]*# ]]; then
+            # Extraer clave y valor (soporta espacios alrededor del =)
+            key=$(echo "$line" | cut -d '=' -f 1 | xargs)
+            value=$(echo "$line" | cut -d '=' -f 2- | xargs)
+            
+            # Solo procesar si hay una clave válida
+            if [ -n "$key" ] && [ -n "$value" ]; then
+                # Agregar a DART_DEFINES
+                DART_DEFINES="$DART_DEFINES --dart-define=$key=$value"
+            fi
+        fi
+    done < "$ENV_FILE"
+    
+    echo "✅ Configuración cargada"
+    echo ""
+else
+    echo "⚠️  Archivo .env no encontrado. Usando valores por defecto."
+    echo "   Crea un archivo .env basado en .env.example si necesitas configuración personalizada."
+    echo ""
+fi
+
 # Instalar dependencias
 echo "📦 Instalando dependencias..."
 flutter pub get
@@ -52,13 +83,14 @@ echo "🚀 Iniciando la app EVI..."
 echo "   (Presiona 'q' para salir)"
 echo ""
 
-# Ejecutar la app
+# Ejecutar la app con las variables de entorno
 # Si hay un dispositivo web, usarlo; si no, usar el primer dispositivo disponible
 if flutter devices | grep -q "Chrome"; then
     echo "🌐 Ejecutando en Chrome..."
-    flutter run -d chrome
+    flutter run -d chrome $DART_DEFINES
 else
     echo "📱 Ejecutando en el primer dispositivo disponible..."
-    flutter run
+    flutter run $DART_DEFINES
 fi
+
 

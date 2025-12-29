@@ -10,3 +10,4 @@ abstract class FastingRepository {
   Future<List<FastingRecord>> getRecentFastingHistory({int days = 7});
 }
 
+

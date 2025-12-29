@@ -160,3 +160,4 @@ Si encuentras algún problema, verifica:
 2. `flutter --version` - verifica la versión
 3. Revisa los logs en la terminal para ver errores específicos
 
+

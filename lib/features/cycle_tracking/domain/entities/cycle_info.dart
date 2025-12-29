@@ -16,3 +16,4 @@ class CycleInfo extends Equatable {
   List<Object> get props => [currentDay, phase, phaseDescription];
 }
 
+

@@ -96,3 +96,4 @@ Luego ejecuta los 3 comandos de arriba.
 
 El script verifica todo automáticamente y te guía si falta algo.
 
+

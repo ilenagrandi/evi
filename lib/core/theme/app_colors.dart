@@ -40,3 +40,4 @@ class AppColors {
   static const Color shadow = Color(0x1A000000); // Negro con 10% opacidad
 }
 
+

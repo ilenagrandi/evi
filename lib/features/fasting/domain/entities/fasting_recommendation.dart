@@ -16,3 +16,4 @@ class FastingRecommendation extends Equatable {
   List<Object> get props => [hours, phase, description];
 }
 
+

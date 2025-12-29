@@ -2,25 +2,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/entities/fasting_recommendation.dart';
 import '../../domain/repositories/fasting_repository.dart';
 import '../../data/repositories/fasting_repository_impl.dart';
-import '../../../../core/services/mock_fasting_service.dart';
-import '../../../../core/services/mock_cycle_service.dart';
+import '../../../../core/services/service_factory.dart';
 import '../../../../core/services/fasting_service.dart';
-
-/// Provider del servicio de ayuno
-final fastingServiceProvider = Provider<FastingService>((ref) {
-  final cycleService = MockCycleService();
-  return MockFastingService(cycleService);
-});
-
-/// Provider del servicio de ciclo (para fasting)
-final cycleServiceForFastingProvider = Provider((ref) {
-  return MockCycleService();
-});
 
 /// Provider del repositorio de ayuno
 final fastingRepositoryProvider = Provider<FastingRepository>((ref) {
   final fastingService = ref.watch(fastingServiceProvider);
-  final cycleService = ref.watch(cycleServiceForFastingProvider);
+  final cycleService = ref.watch(cycleServiceProvider);
   return FastingRepositoryImpl(fastingService, cycleService);
 });
 

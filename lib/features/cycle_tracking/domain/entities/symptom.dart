@@ -32,3 +32,4 @@ class Symptom extends Equatable {
   List<Object> get props => [id, name, emoji, isSelected];
 }
 
+

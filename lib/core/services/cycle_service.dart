@@ -17,3 +17,4 @@ abstract class CycleService {
   Future<int> getAverageCycleLength();
 }
 
+
